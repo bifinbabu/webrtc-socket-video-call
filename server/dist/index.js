@@ -22,6 +22,9 @@ io.on("connection", (socket) => {
         userManager.removeUser(socket.id);
     });
 });
+app.get("/", (req, res) => {
+    res.send("Welcome to socket server");
+});
 server.listen(3000, () => {
     console.log("server running at http://localhost:3000");
 });
