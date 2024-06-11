@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Room } from "./Room";
 
 export const Landing = () => {
   const [name, setName] = useState("");
@@ -33,23 +34,32 @@ export const Landing = () => {
     }
   }, [videoRef]);
 
-  return (
-    <>
-      <div>
-        Landing Page
+  if (!joined) {
+    return (
+      <>
         <div>
-          <video autoPlay ref={videoRef}></video>
-          <input type="text" onChange={(e) => setName(e.target.value)} />
-          <button
-            onClick={() => {
-              // Join room logic here
-              navigate(`/room?name=${name}`);
-            }}
-          >
-            Join
-          </button>
+          Landing Page
+          <div>
+            <video autoPlay ref={videoRef}></video>
+            <input type="text" onChange={(e) => setName(e.target.value)} />
+            <button
+              onClick={() => {
+                setJoined(true);
+              }}
+            >
+              Join
+            </button>
+          </div>
         </div>
-      </div>
-    </>
+      </>
+    );
+  }
+
+  return (
+    <Room
+      name={name}
+      localAudioTrack={localAudioTrack}
+      localVideoTrack={localVideoTrack}
+    />
   );
 };
